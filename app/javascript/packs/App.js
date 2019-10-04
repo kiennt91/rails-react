@@ -12,7 +12,7 @@ class LegacyWelcomeClass extends Component {
 const Welcome = withTranslation()(LegacyWelcomeClass);
 
 // Component using the Trans component
-function MyComponent() {
+const MyComponent = () => {
   return (
     <Trans i18nKey="description.part1">
       To get started, edit <code>src/Home.js</code> and save to reload.
@@ -21,7 +21,7 @@ function MyComponent() {
 }
 
 // page uses the hook
-function Page() {
+const Page = () => {
   const { t, i18n } = useTranslation();
 
   const changeLanguage = lng => {
