@@ -1,6 +1,6 @@
 # README
 
-#　ロカール環境確認
+# ロカール環境確認
 
 ## 起動
 ```sh
@@ -79,8 +79,8 @@ Rails.application.routes.draw do
   root to: 'home#index'
 
   namespace :locales do
-    get :en
-    get :de
+    get :en, format: 'json'
+    get :de, format: 'json'
   end
 end
 ```
@@ -120,7 +120,8 @@ class LegacyWelcomeClass extends Component {
 const Welcome = withTranslation()(LegacyWelcomeClass);
 ```
 
-### 
+### Translation (render prop)
+https://react.i18next.com/latest/translation-render-prop
 
 ```javascript
 // Component using the Trans component
@@ -133,11 +134,24 @@ const MyComponent = () => {
 }
 ```
 
+### useTranslation (hook)
+https://react.i18next.com/latest/usetranslation-hook
+
+```javascript
+const { t, i18n } = useTranslation();
+```
+
+### 言語を切り替える
+
+```javascript
+i18n.changeLanguage('en');
+i18n.changeLanguage('de');
+```
 
 ## Doc
 https://react.i18next.com/
 
-## 変更内容
+## DIFF確認用
 https://github.com/kiennt91/rails-react/compare/f0bbc9048e0d7760300647b392636c65dbce3716...master
 
 
