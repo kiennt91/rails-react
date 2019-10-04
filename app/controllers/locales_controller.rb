@@ -1,9 +1,13 @@
 class LocalesController < ApplicationController
-  def en
-    render json: YAML.load_file(File.open('config/locales/en.yml'))['en'].to_json
-  end
+  before_action :render_locale
+  
+  def en; end
+  def de; end
 
-  def de
-    render json: YAML.load_file(File.open('config/locales/de.yml'))['de'].to_json
+  private
+
+  def render_locale
+    lang = params[:action]
+    render json: YAML.load_file(File.open("config/locales/#{lang}.yml"))[lang].to_json
   end
 end
