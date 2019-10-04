@@ -1,4 +1,14 @@
 # README
+react-i18nextを多言語対応の検証
+
+- 使いやすい、分かりやすい、Docがちゃんと書いてある
+- reactでもRailsのconfig/locales 配下のファイルを読み込むことができること
+
+# 検証のバージョン
+
+- Rails 6.0.0
+- React 16.10.2
+- react-i18next 10.13.1
 
 # ロカール環境確認
 
@@ -13,6 +23,8 @@ $ docker-compose up
 http://0.0.0.0:3000/
 
 de-enボタンをクリックして言語が切り替えることを確認してください。
+
+[![Image from Gyazo](https://i.gyazo.com/d4af5ff6fa63d62fc9d611aaeb65311b.gif)](https://gyazo.com/d4af5ff6fa63d62fc9d611aaeb65311b)
 
 # 設定内容
 
@@ -104,7 +116,7 @@ end
 ## テスト用App.js作成
 https://github.com/kiennt91/rails-react/blob/master/app/javascript/packs/App.js
 
-これはreact-i18nextからExampleをそのまま使います。3三つの翻訳方法を紹介します。
+これはreact-i18nextからExampleをそのまま使います。三つの翻訳方法を紹介します。
 
 ### withTranslation (HOC)
 https://react.i18next.com/latest/withtranslation-hoc
@@ -148,12 +160,11 @@ i18n.changeLanguage('en');
 i18n.changeLanguage('de');
 ```
 
-## Doc
-https://react.i18next.com/
-
 ## DIFF確認用
 https://github.com/kiennt91/rails-react/compare/f0bbc9048e0d7760300647b392636c65dbce3716...master
 
+## Doc
+https://react.i18next.com/
 
 # 参照
 https://shinshin86.hateblo.jp/entry/2019/09/28/084835
