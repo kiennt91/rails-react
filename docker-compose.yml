@@ -6,6 +6,7 @@ services:
     command: [
       'prehook', 'rm -f /app/tmp/pids/server.pid', '--',
       'prehook', 'bundle install --jobs 4', '--',
+      'prehook', 'yarn install', '--',
       'codep',
         'bundle exec rails s -p 3000 -b 0.0.0.0',
         'bin/webpack-dev-server'
