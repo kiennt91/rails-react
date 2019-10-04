@@ -19,19 +19,125 @@ de-enボタンをクリックして言語が切り替えることを確認して
 ## react-i18nextのGithub 
 https://github.com/i18next/react-i18next
 
-# 必要なライブラリをインストール
+## 必要なライブラリをインストール
 
+i18nextとreact-i18nextだけのインストールは必要ですが、i18next-xhr-backendとi18next-browser-languagedetectorもおすすめです。
 ```sh
 $ yarn install i18next i18next-xhr-backend i18next-browser-languagedetector react-i18next
 ```
 - https://github.com/i18next/react-i18next
 - https://github.com/i18next/i18next-xhr-backend
+  -  xhrを使用してバックエンドサーバーからリソースをロードする用です。
 - https://github.com/i18next/i18next-browser-languageDetector
+  - ブラウザでユーザー言語を検出するために使用されるi18next言語検出プラグインです。
 
-# Doc
+## i18n.jsファイル作成
+https://github.com/kiennt91/rails-react/blob/master/app/javascript/packs/i18n.js
+
+i18nextを設定する用です。どんなプラグインを使うか、サーバからリソースをロードパスもこちらを設定します。
+デフォルトのロードパスは/locales/{{lng}}/translation.jsonです。{{lng}}はen, jpなどです。
+今回/locales/{{lng}}.jsonを設定します。
+
+```javascript
+...
+  .init({
+    fallbackLng: 'en',
+    debug: true,
+    ...
+    backend: {
+      loadPath: '/locales/{{lng}}.json',
+    }
+  });
+```
+詳細の設定説明はこちらを参考してください。
+- https://www.i18next.com/overview/configuration-options
+- https://react.i18next.com/latest/i18next-instance
+
+## バックエンドのlocalesロードパス準備
+
+```yaml
+# config/locales/en.yml
+en:
+  title: "Welcome to react using react-i18next"
+  description:
+    part1: "To get started, edit <1>App.js</1> and save to reload."
+    part2: "Switch language between english and german using buttons above."
+```
+
+```yaml
+# config/locales/de.yml
+de:
+  title: "Willkommen zu react und react-i18next"
+  description:
+    part1: "Um loszulegen, ändere <1>App(DE).js</1> speicheren und neuladen."
+    part2: "Ändere die Sprachen zwischen deutsch und englisch mit Hilfe der beiden Schalter."
+```
+
+```ruby
+# route.rb
+Rails.application.routes.draw do
+  root to: 'home#index'
+
+  namespace :locales do
+    get :en
+    get :de
+  end
+end
+```
+
+```ruby
+class LocalesController < ApplicationController
+  before_action :render_locale
+  
+  def en; end
+  def de; end
+
+  private
+
+  def render_locale
+    lang = params[:action]
+    render json: YAML.load_file(File.open("config/locales/#{lang}.yml"))[lang].to_json
+  end
+end
+```
+
+## テスト用App.js作成
+https://github.com/kiennt91/rails-react/blob/master/app/javascript/packs/App.js
+
+これはreact-i18nextからExampleをそのまま使います。3三つの翻訳方法を紹介します。
+
+### withTranslation (HOC)
+https://react.i18next.com/latest/withtranslation-hoc
+
+```javascript
+// use hoc for class based components
+class LegacyWelcomeClass extends Component {
+  render() {
+    const { t, i18n } = this.props;
+    return <h2>{t('title')}</h2>;
+  }
+}
+const Welcome = withTranslation()(LegacyWelcomeClass);
+```
+
+### 
+
+```javascript
+// Component using the Trans component
+const MyComponent = () => {
+  return (
+    <Trans i18nKey="description.part1">
+      To get started, edit <code>src/Home.js</code> and save to reload.
+    </Trans>
+  );
+}
+```
+
+
+## Doc
 https://react.i18next.com/
 
-# 変更内容
+## 変更内容
 https://github.com/kiennt91/rails-react/compare/f0bbc9048e0d7760300647b392636c65dbce3716...master
 
 
